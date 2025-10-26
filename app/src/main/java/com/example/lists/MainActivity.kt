@@ -59,9 +59,11 @@ class MainActivity : ComponentActivity() {
     private fun HomeScreen() {
         Surface(color = Color.White) {
             Box(modifier = Modifier.fillMaxSize()) {
-                // TODO 5: Use a vertical list that composes and displays only the visible items.
-                // TODO 6: Make use of Compose DSL to describe the content of the list and make sure
-                // to instantiate a [ChiuitListItem] for every item in [chiuitListState.value].
+                LazyColumn {
+                    items(chiuitListState.value) { chiuit ->
+                        ChiuitListItem(chiuit = chiuit)
+                    }
+                }
                 FloatingActionButton(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -140,10 +142,10 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun setChiuitText(resultText: String?) {
-        // TODO 7: Check if text is not null or empty, instantiate a new chiuit object
-
-        //  then add it to the [chiuitListState.value].
-
+        if (!resultText.isNullOrBlank()) {
+            val newChiuit = Chiuit(resultText)
+            chiuitListState.value = chiuitListState.value + newChiuit
+        }
     }
 
     @Preview(showBackground = true)
@@ -152,5 +154,3 @@ class MainActivity : ComponentActivity() {
         HomeScreen()
     }
 }
-
-
